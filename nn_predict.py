@@ -68,7 +68,7 @@ def train_and_save():
                   metrics=['accuracy'])
 
     # 3. 訓練模型
-    model.fit(x_train, y_train, epochs=100, batch_size=128, validation_split=0.1)
+    model.fit(x_train, y_train, epochs=30, batch_size=64, validation_split=0.1)
 
     # 4. 儲存模型架構（簡化為自定格式，方便 numpy 推論）
     model_arch = []
@@ -91,7 +91,7 @@ def train_and_save():
             "config": cfg,
             "weights": wnames
         })
-    with open("model/fashion_mnist.json", "w") as f:
+    with open("fashion_mnist.json", "w") as f:
         json.dump(model_arch, f)
 
     # 5. 儲存權重為 npz
@@ -99,9 +99,9 @@ def train_and_save():
     for layer in model.layers:
         for idx, w in enumerate(layer.get_weights()):
             weights[f"{layer.name}_w{idx}"] = w
-    np.savez("model/fashion_mnist.npz", **weights)
+    np.savez("fashion_mnist.npz", **weights)
 
-    print("模型架構已儲存為 model/fashion_mnist.json，權重已儲存為 model/fashion_mnist.npz")
+    print("模型架構已儲存為fashion_mnist.json，權重已儲存為fashion_mnist.npz")
 
 # === 主程式 ===
 if __name__ == "__main__":
